@@ -10,62 +10,62 @@ import {
   useLocation
 } from "react-router-dom";
 
-//praktikum 1
-export default function BasicExample(){
-  return(
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
-        <hr />
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+// //praktikum 1
+// export default function BasicExample(){
+//   return(
+//     <Router>
+//       <div>
+//         <ul>
+//           <li>
+//             <Link to="/">Home</Link>
+//           </li>
+//           <li>
+//             <Link to="/about">About</Link>
+//           </li>
+//           <li>
+//             <Link to="/dashboard">Dashboard</Link>
+//           </li>
+//         </ul>
+//         <hr />
+//         <Switch>
+//           <Route exact path='/'>
+//             <Home />
+//           </Route>
+//           <Route path="/about">
+//             <About />
+//           </Route>
+//           <Route path="/dashboard">
+//             <Dashboard />
+//           </Route>
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
 
-function Home(){
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
-  );
-}
+// function Home(){
+//   return (
+//     <div>
+//       <h2>Home</h2>
+//     </div>
+//   );
+// }
 
-function About(){
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  );
-}
+// function About(){
+//   return (
+//     <div>
+//       <h2>About</h2>
+//     </div>
+//   );
+// }
 
-function Dashboard() {
-  return(
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  )
-}
+// function Dashboard() {
+//   return(
+//     <div>
+//       <h2>Dashboard</h2>
+//     </div>
+//   )
+// }
 
 //praktikum 2
 // export default function ParamsExample(){
@@ -194,104 +194,104 @@ function Dashboard() {
 
 
 //praktikum 4
-// export default function AuthExample(){
-//   return(
-//     <Router>
-//       <div>
-//         <AuthButton />
-//         <ul>
-//           <li>
-//             <Link to="/public">Public Page</Link>
-//           </li>
-//           <li>
-//             <Link to="/private">Private Page</Link>
-//           </li>
-//         </ul>
-//         <hr />
-//         <Switch>
-//           <Route path="/public">
-//             <PublicPage />
-//           </Route>
-//           <Route path="/login">
-//             <LoginPage />
-//           </Route>
-//           <PrivateRoute path="/private">
-//             <ProtectedPage />
-//           </PrivateRoute>
-//         </Switch>
-//       </div>
-//     </Router>
-//   );
-// }
+export default function AuthExample(){
+  return(
+    <Router>
+      <div>
+        <AuthButton />
+        <ul>
+          <li>
+            <Link to="/public">Public Page</Link>
+          </li>
+          <li>
+            <Link to="/private">Private Page</Link>
+          </li>
+        </ul>
+        <hr />
+        <Switch>
+          <Route path="/public">
+            <PublicPage />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <PrivateRoute path="/private">
+            <ProtectedPage />
+          </PrivateRoute>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
 
-// const fakeAuth = {
-//   isAuthenticated: false,
-//   autheticate(cb) {
-//     fakeAuth.isAuthenticated = true;
-//     setTimeout(cb,100);
-//   },
-//   signout(cb){
-//     fakeAuth.isAuthenticated = false;
-//     setTimeout(cb,100);
-//   }
-// };
+const fakeAuth = {
+  isAuthenticated: false,
+  autheticate(cb) {
+    fakeAuth.isAuthenticated = true;
+    setTimeout(cb,100);
+  },
+  signout(cb){
+    fakeAuth.isAuthenticated = false;
+    setTimeout(cb,100);
+  }
+};
 
-// function AuthButton(){
-//   let history = useHistory();
+function AuthButton(){
+  let history = useHistory();
 
-//   return fakeAuth.isAuthenticated ? (
-//     <p>
-//       Welcome!{" "}
-//       <button onClick={() => {
-//         fakeAuth.signout(() => history.push("/"));
-//       }}>
-//         Sign out
-//       </button>
-//     </p>
-//   ) : (
-//     <p>You are not logged</p>
-//   );
-// }
+  return fakeAuth.isAuthenticated ? (
+    <p>
+      Welcome!{" "}
+      <button onClick={() => {
+        fakeAuth.signout(() => history.push("/"));
+      }}>
+        Sign out
+      </button>
+    </p>
+  ) : (
+    <p>You are not logged</p>
+  );
+}
 
-// function PrivateRoute({ children, ...rest}){
-//   return(
-//     <Route
-//     {...rest}
-//     render={({location})=>
-//   fakeAuth.isAuthenticated ? (
-//     children
-//   ) : (
-//     <Redirect
-//     to={{
-//       pathname: "/login",
-//       state: {from:location}
-//     }}
-//     />
-//   )}
-//   />
-//   );
-// }
+function PrivateRoute({ children, ...rest}){
+  return(
+    <Route
+    {...rest}
+    render={({location})=>
+  fakeAuth.isAuthenticated ? (
+    children
+  ) : (
+    <Redirect
+    to={{
+      pathname: "/login",
+      state: {from:location}
+    }}
+    />
+  )}
+  />
+  );
+}
 
-// function PublicPage(){
-//   return <h3>Public</h3>;
-// }
-// function ProtectedPage(){
-//   return <h3>Private</h3>;
-// }
-// function LoginPage(){
-//   let history = useHistory();
-//   let location = useLocation();
+function PublicPage(){
+  return <h3>Public</h3>;
+}
+function ProtectedPage(){
+  return <h3>Private</h3>;
+}
+function LoginPage(){
+  let history = useHistory();
+  let location = useLocation();
 
-//   let {from} = location.state || {from:{pathname: "/"}};
-//   let login = () => {
-//     fakeAuth.autheticate(()=>{
-//       history.replace(from);
-//     });
-//   };
-//   return (
-//     <div>
-//       <p>You must log in to view the page at {from.pathname}</p>
-//       <button onClick={login}>Log in</button>
-//     </div>
-//   );
-// }
+  let {from} = location.state || {from:{pathname: "/"}};
+  let login = () => {
+    fakeAuth.autheticate(()=>{
+      history.replace(from);
+    });
+  };
+  return (
+    <div>
+      <p>You must log in to view the page at {from.pathname}</p>
+      <button onClick={login}>Log in</button>
+    </div>
+  );
+}
